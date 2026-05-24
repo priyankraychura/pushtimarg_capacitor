@@ -73,6 +73,7 @@ export interface FavoritesContextType {
 
 export interface ReadingContextType {
   aartiIndex: ContentIndexItem[];
+  recentReadings: ContentIndexItem[];
   isLoadingIndex: boolean;
   indexError: string | null;
   retryIndex: () => void;

@@ -17,6 +17,14 @@ export const ReadingContext = createContext<ReadingContextType | undefined>(unde
 
 export function ReadingProvider({ children }: { children: ReactNode }) {
   const [aartiIndex, setAartiIndex] = useState<ContentIndexItem[]>([]);
+  const [recentReadingIds, setRecentReadingIds] = useState<string[]>(() => {
+    try {
+      const stored = localStorage.getItem('recentReadingIds');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      return [];
+    }
+  });
   const [isLoadingIndex, setIsLoadingIndex] = useState<boolean>(true);
   const [indexError, setIndexError] = useState<string | null>(null);
   const [indexRetryCount, setIndexRetryCount] = useState(0);
@@ -62,6 +70,13 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
     setIsLoadingContent(true);
     setContentError(null);
 
+    setRecentReadingIds((prev) => {
+      const filtered = prev.filter((id) => id !== item.id);
+      const updated = [item.id, ...filtered].slice(0, 4);
+      localStorage.setItem('recentReadingIds', JSON.stringify(updated));
+      return updated;
+    });
+
     getAartiContent(item.file)
       .then((detail) => {
         setIsLoadingContent(false);
@@ -78,15 +93,22 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
   // ==========================================
   // Context value
   // ==========================================
+  const recentReadings = useMemo(() => {
+    return recentReadingIds
+      .map(id => aartiIndex.find(item => item.id === id))
+      .filter((item): item is ContentIndexItem => item !== undefined);
+  }, [recentReadingIds, aartiIndex]);
+
   const value = useMemo<ReadingContextType>(() => ({
     aartiIndex,
+    recentReadings,
     isLoadingIndex,
     indexError,
     retryIndex,
     handleOpenAarti,
     isLoadingContent,
     contentError,
-  }), [aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti, isLoadingContent, contentError]);
+  }), [aartiIndex, recentReadings, isLoadingIndex, indexError, retryIndex, handleOpenAarti, isLoadingContent, contentError]);
 
   return (
     <ReadingContext.Provider value={value}>

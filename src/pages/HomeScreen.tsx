@@ -16,11 +16,12 @@ import { ROUTES } from '../constants/routes';
 export const HomeScreen: React.FC = () => {
   const { isDarkMode, textColor, subTextColor } = useTheme();
   const { user, profileImage } = useAuth();
-  const { aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
+  const { aartiIndex, recentReadings, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
   const navigate = useNavigate();
 
-  // Show the first 4 items as "recent" / featured
-  const featuredItems = aartiIndex.slice(0, 4);
+  // Show the last 4 reading items, or fallback to featured if empty
+  const displayItems = recentReadings.length > 0 ? recentReadings : aartiIndex.slice(0, 4);
+  const displayTitle = recentReadings.length > 0 ? "Continue Reading" : "Featured";
 
   return (
     <>
@@ -70,10 +71,10 @@ export const HomeScreen: React.FC = () => {
         </section>
 
         <section>
-          <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Featured</h2>
-          {isLoadingIndex ? <LoadingState message="Loading featured items..." /> : indexError ? <ErrorState message={indexError} onRetry={retryIndex} /> : (
+          <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>{displayTitle}</h2>
+          {isLoadingIndex ? <LoadingState message="Loading items..." /> : indexError ? <ErrorState message={indexError} onRetry={retryIndex} /> : (
             <div className="space-y-3">
-              {featuredItems.map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenAarti} />)}
+              {displayItems.map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenAarti} />)}
             </div>
           )}
         </section>
