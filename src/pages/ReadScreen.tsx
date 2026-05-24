@@ -7,7 +7,6 @@ import { ScreenHeader } from '../components/ScreenHeader';
 import { IconButton } from '../components/IconButton';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
-import { ROUTES } from '../constants/routes';
 import type { ContentIndexItem, AartiContent, VartaContent } from '../types';
 import { isAartiContent } from '../types';
 

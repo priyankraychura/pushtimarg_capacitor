@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { BookOpen } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
@@ -21,7 +21,7 @@ interface CategoryLocationState {
 }
 
 export const CategoryScreen: React.FC = () => {
-  const { isDarkMode, textColor, subTextColor } = useTheme();
+  const { textColor, subTextColor } = useTheme();
   const { aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
   const navigate = useNavigate();
   const location = useLocation();
