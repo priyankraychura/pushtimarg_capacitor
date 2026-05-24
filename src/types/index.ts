@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 // ==========================================
 // Content Types (re-exported from dedicated module)
 // ==========================================
-export type {
+import type {
   ContentIndexItem,
   VaishnavPrasang,
   VaishnavIndexItem,
@@ -12,12 +12,21 @@ export type {
   ContentDetail,
 } from './content';
 
+export type {
+  ContentIndexItem,
+  VaishnavPrasang,
+  VaishnavIndexItem,
+  AartiContent,
+  VartaContent,
+  ContentDetail,
+};
+
 export { isAartiContent, isVartaContent } from './content';
 
 // ==========================================
 // Auth Types (re-exported from dedicated module)
 // ==========================================
-export type {
+import type {
   AuthUser,
   AuthResponse,
   AuthState,
@@ -27,6 +36,17 @@ export type {
   VerifyOtpPayload,
   ResetPasswordPayload,
 } from './auth';
+
+export type {
+  AuthUser,
+  AuthResponse,
+  AuthState,
+  AuthContextType,
+  RegisterPayload,
+  LoginPayload,
+  VerifyOtpPayload,
+  ResetPasswordPayload,
+};
 
 // ==========================================
 // Domain Types
