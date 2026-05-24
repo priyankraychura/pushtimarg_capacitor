@@ -68,7 +68,7 @@ export const CalendarScreen: React.FC = () => {
         {/* Selected Day Info Card */}
         <GlassCard className="p-4 mb-6">
             <div className="flex items-center justify-between mb-2">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${isDarkMode ? 'bg-amber-500/15 text-amber-400' : 'bg-orange-100/80 text-orange-600'}`}>
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${isDarkMode ? 'bg-blue-500/15 text-blue-400' : 'bg-orange-100/80 text-orange-600'}`}>
                     {activeDay?.isToday ? "Today" : "Selected Date"}
                 </span>
                 <span className={`text-xs font-semibold ${subTextColor}`}>
@@ -117,8 +117,8 @@ export const CalendarScreen: React.FC = () => {
                   <button 
                     onClick={() => setSelectedDay(dayData)}
                     className={`relative w-10 h-10 flex flex-col items-center justify-center rounded-[14px] transition-all duration-200
-                      ${isSelected ? (isDarkMode ? 'bg-amber-500 text-white shadow-md scale-105 z-10' : 'bg-[#F47820] text-white shadow-md scale-105 z-10') : bgGlassHover}
-                      ${!isSelected && isToday ? `ring-2 ring-inset ${isDarkMode ? 'ring-amber-500/50' : 'ring-[#F47820]/40'}` : ''}
+                      ${isSelected ? (isDarkMode ? 'bg-blue-500 text-white shadow-md scale-105 z-10' : 'bg-[#F47820] text-white shadow-md scale-105 z-10') : bgGlassHover}
+                      ${!isSelected && isToday ? `ring-2 ring-inset ${isDarkMode ? 'ring-blue-400/50' : 'ring-[#F47820]/40'}` : ''}
                       ${!dayData.isCurrentMonth ? 'opacity-30' : ''}
                     `}
                   >
@@ -127,7 +127,7 @@ export const CalendarScreen: React.FC = () => {
                     </span>
                     {hasSpecialEvent && dayData.isCurrentMonth && (
                       <div className={`absolute bottom-1.5 w-1 h-1 rounded-full ${
-                        isSelected ? 'bg-white' : (isDarkMode ? 'bg-amber-500' : 'bg-[#F47820]')
+                        isSelected ? 'bg-white' : (isDarkMode ? 'bg-blue-400' : 'bg-[#F47820]')
                       }`} />
                     )}
                   </button>
@@ -144,7 +144,7 @@ export const CalendarScreen: React.FC = () => {
             const { month, day } = formatAgiyarasDate(item.date);
             return (
               <GlassCard key={idx} className="p-4 rounded-2xl flex items-center gap-4 cursor-pointer hover:scale-[1.02] transition-transform duration-300">
-                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center shadow-sm flex-shrink-0 border ${borderGlass} ${isDarkMode ? 'bg-white/5' : 'bg-white/60'}`}>
+                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center shadow-sm flex-shrink-0 border ${borderGlass} ${isDarkMode ? 'bg-slate-800/60' : 'bg-white/60'}`}>
                   <span className={`text-[10px] font-bold uppercase ${subTextColor}`}>{month}</span>
                   <span className={`text-sm font-bold ${primaryText}`}>{day}</span>
                 </div>

@@ -11,7 +11,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ tabs, active
         {tabs.map(tab => {
           const isActive = activeId === tab.id;
           const activeStyle = isActive 
-            ? (isDarkMode ? 'bg-white/10 text-amber-300 shadow-sm' : 'bg-white text-orange-600 shadow-sm') 
+            ? (isDarkMode ? 'bg-slate-700/60 text-blue-400 shadow-sm' : 'bg-white text-orange-600 shadow-sm') 
             : subTextColor;
           return (
             <button 

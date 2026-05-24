@@ -63,7 +63,7 @@ export const SettingsScreen: React.FC = () => {
         </SettingsSection>
 
         <div className="mt-12 mb-8 flex flex-col items-center justify-center text-center">
-          <div className={`w-20 h-20 rounded-full shrink-0 flex items-center justify-center mb-4 shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-amber-500 to-orange-700' : 'bg-gradient-to-br from-orange-400 to-rose-500'}`}><SunMedium size={40} className="text-white" /></div>
+          <div className={`w-20 h-20 rounded-full shrink-0 flex items-center justify-center mb-4 shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-blue-500 to-blue-700' : 'bg-gradient-to-br from-orange-400 to-rose-500'}`}><SunMedium size={40} className="text-white" /></div>
           <h2 className={`text-xl font-bold tracking-tight ${textColor}`}>Pushtimarg</h2>
           <p className={`text-sm mt-1 font-medium ${subTextColor}`}>Version 1.0.0</p>
         </div>

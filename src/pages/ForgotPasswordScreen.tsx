@@ -125,7 +125,7 @@ export const ForgotPasswordScreen: React.FC = () => {
         <div
           className={`w-24 h-24 rounded-full shrink-0 flex items-center justify-center mb-8 shadow-lg ${
             isDarkMode
-              ? 'bg-gradient-to-br from-amber-500 to-orange-700'
+              ? 'bg-gradient-to-br from-blue-500 to-blue-700'
               : 'bg-gradient-to-br from-orange-400 to-rose-500'
           }`}
         >

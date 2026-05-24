@@ -61,7 +61,7 @@ export const ProfileScreen: React.FC = () => {
         <div className="flex flex-col items-center mt-6 mb-8">
           <div
             className={`relative w-28 h-28 rounded-full flex items-center justify-center shadow-lg border-4 ${
-              isDarkMode ? 'border-slate-800' : 'border-white'
+              isDarkMode ? 'border-[#1c2333]' : 'border-white'
             } ${!profileImage ? 'bg-gradient-to-br from-orange-400 to-rose-500' : ''}`}
           >
             {profileImage ? (
@@ -72,7 +72,7 @@ export const ProfileScreen: React.FC = () => {
             <button
               onClick={() => fileInputRef.current?.click()}
               className={`absolute bottom-0 right-0 w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md transition-transform active:scale-95 ${
-                isDarkMode ? 'bg-amber-500' : 'bg-orange-500'
+                isDarkMode ? 'bg-blue-500' : 'bg-orange-500'
               }`}
             >
               <Camera size={14} />
@@ -88,14 +88,14 @@ export const ProfileScreen: React.FC = () => {
           <div
             className={`flex items-center gap-3 p-4 rounded-2xl mb-6 border ${
               isDarkMode
-                ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                : 'bg-amber-50 border-amber-200 text-amber-700'
+                ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+                : 'bg-blue-50 border-blue-200 text-blue-700'
             }`}
           >
             <AlertTriangle size={20} className="shrink-0" />
             <div className="flex-1">
               <p className="text-xs font-semibold">Email not verified</p>
-              <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-amber-400/70' : 'text-amber-600'}`}>
+              <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-blue-400/70' : 'text-amber-600'}`}>
                 Check your inbox for a verification link.
               </p>
             </div>
@@ -122,7 +122,7 @@ export const ProfileScreen: React.FC = () => {
             <button
               onClick={handleCancel}
               className={`flex-1 py-3.5 rounded-2xl font-bold transition-all ${
-                isDarkMode ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-black/5 text-slate-800 hover:bg-black/10'
+                isDarkMode ? 'bg-slate-700/40 text-slate-100 hover:bg-slate-700/60' : 'bg-black/5 text-slate-800 hover:bg-black/10'
               }`}
             >
               Cancel

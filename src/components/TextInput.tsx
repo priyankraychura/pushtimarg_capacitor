@@ -4,7 +4,7 @@ import type { TextInputProps } from '../types';
 
 export const TextInput: React.FC<TextInputProps> = ({ label, icon, rightElement, className = "", ...props }) => {
   const { isDarkMode, textColor, subTextColor, borderGlass } = useTheme();
-  const containerBg = isDarkMode ? 'bg-black/20 focus-within:border-amber-500/50' : 'bg-white/60 focus-within:border-orange-400/50';
+  const containerBg = isDarkMode ? 'bg-slate-800/40 focus-within:border-blue-500/50' : 'bg-white/60 focus-within:border-orange-400/50';
   
   return (
     <div className="w-full">
@@ -13,7 +13,7 @@ export const TextInput: React.FC<TextInputProps> = ({ label, icon, rightElement,
         {icon && <span className={`mr-3 ${subTextColor}`}>{icon}</span>}
         <input 
           {...props} 
-          className={`bg-transparent border-none outline-none w-full text-sm font-medium placeholder-opacity-60 ${textColor} placeholder-${isDarkMode ? 'amber-200/40' : 'slate-400'} ${className}`} 
+          className={`bg-transparent border-none outline-none w-full text-sm font-medium placeholder-opacity-60 ${textColor} placeholder-${isDarkMode ? 'slate-500' : 'slate-400'} ${className}`} 
         />
         {rightElement && <div className="ml-2">{rightElement}</div>}
       </div>

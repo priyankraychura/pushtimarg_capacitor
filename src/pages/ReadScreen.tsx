@@ -77,7 +77,7 @@ export const ReadScreen: React.FC = () => {
         showBack onBack={() => navigate(-1)}
         title={
           <div className="flex flex-col justify-center">
-            <span className={`text-[10px] font-bold uppercase tracking-widest mb-0.5 ${isDarkMode ? 'text-amber-500' : 'text-orange-600'}`}>{item.category}</span>
+            <span className={`text-[10px] font-bold uppercase tracking-widest mb-0.5 ${isDarkMode ? 'text-blue-400' : 'text-orange-600'}`}>{item.category}</span>
             <span className={`text-base font-bold truncate ${textColor}`}>{item.title}</span>
           </div>
         }
@@ -85,7 +85,7 @@ export const ReadScreen: React.FC = () => {
           <div className="relative" ref={menuRef}>
             <IconButton icon={<MoreVertical size={20} />} onClick={() => setIsMenuOpen(!isMenuOpen)} />
             {isMenuOpen && (
-              <div className={`absolute right-0 top-full mt-2 w-64 z-50 flex flex-col p-2 shadow-2xl rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-black/5'}`}>
+              <div className={`absolute right-0 top-full mt-2 w-64 z-50 flex flex-col p-2 shadow-2xl rounded-2xl border ${isDarkMode ? 'bg-[#1c2333] border-slate-700/40' : 'bg-white border-black/5'}`}>
                 <div className={`flex items-center justify-between px-3 py-3 border-b ${borderGlass}`}>
                   <div className="flex items-center gap-2"><Type size={16} className={subTextColor} /><span className={`text-sm font-semibold ${textColor}`}>Text Size</span></div>
                   <div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export const ReadScreen: React.FC = () => {
         {renderContent()}
         {detail && (
           <div className="flex flex-col items-center mt-16 mb-8">
-            <div className={`h-px w-16 mb-6 rounded-full ${isDarkMode ? 'bg-amber-500/40' : 'bg-orange-300'}`}></div>
+            <div className={`h-px w-16 mb-6 rounded-full ${isDarkMode ? 'bg-blue-400/40' : 'bg-orange-300'}`}></div>
             <p className={`text-lg font-bold tracking-wide ${textColor}`}>Jai Shree Krishna</p>
           </div>
         )}
