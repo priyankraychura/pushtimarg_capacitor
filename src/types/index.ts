@@ -1,6 +1,20 @@
 import type { ReactNode } from 'react';
 
 // ==========================================
+// Content Types (re-exported from dedicated module)
+// ==========================================
+export type {
+  ContentIndexItem,
+  VaishnavPrasang,
+  VaishnavIndexItem,
+  AartiContent,
+  VartaContent,
+  ContentDetail,
+} from './content';
+
+export { isAartiContent, isVartaContent } from './content';
+
+// ==========================================
 // Auth Types (re-exported from dedicated module)
 // ==========================================
 export type {
@@ -17,16 +31,6 @@ export type {
 // ==========================================
 // Domain Types
 // ==========================================
-export interface PushtimargText {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  subCategory?: string;
-  image: string;
-  content: string;
-}
-
 export interface Category {
   name: string;
   icon: ReactNode;
@@ -43,19 +47,18 @@ export interface ThemeContextType {
 }
 
 export interface FavoritesContextType {
-  favoriteIds: number[];
-  toggleFavorite: (id: number) => void;
+  favoriteIds: string[];
+  toggleFavorite: (id: string) => void;
 }
 
 export interface ReadingContextType {
-  recentReadings: PushtimargText[];
-  handleOpenText: (item: PushtimargText) => void;
-  isLoadingList: boolean;
-  listError: string | null;
-  handleRetryList: () => void;
+  aartiIndex: ContentIndexItem[];
+  isLoadingIndex: boolean;
+  indexError: string | null;
+  retryIndex: () => void;
+  handleOpenAarti: (item: ContentIndexItem) => void;
   isLoadingContent: boolean;
   contentError: string | null;
-  handleRetryContent: () => void;
 }
 
 // ==========================================
@@ -112,8 +115,8 @@ export interface LoadingStateProps {
 }
 
 export interface BhajanCardProps {
-  item: PushtimargText;
-  onClick: (item: PushtimargText) => void;
+  item: ContentIndexItem;
+  onClick: (item: ContentIndexItem) => void;
 }
 
 export interface IconButtonProps {

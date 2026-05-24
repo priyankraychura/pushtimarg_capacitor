@@ -1,63 +1,92 @@
-import { createContext, useState, useMemo, useCallback } from 'react';
+import { createContext, useState, useMemo, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { ReadingContextType, PushtimargText } from '../types';
-import { PUSHTIMARG_TEXTS } from '../constants/data';
+import type { ReadingContextType, ContentIndexItem } from '../types';
+import { getAartiIndex, getAartiContent } from '../services/contentService';
+import { extractContentError } from '../lib/contentClient';
 import { ROUTES } from '../constants/routes';
 
 // ==========================================
 // Reading Context
 // ==========================================
+// Manages the aarti/kirtan index and content fetching.
+// Varta is handled separately in CategoryScreen since it has
+// a different data structure (vaishnavs → prasangs).
+
 export const ReadingContext = createContext<ReadingContextType | undefined>(undefined);
 
-const RECENT_KEY = 'pushtimarg_recent';
-
-function getStoredRecent(): PushtimargText[] {
-  try {
-    const saved = localStorage.getItem(RECENT_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch {
-    // localStorage unavailable or corrupt
-  }
-  return PUSHTIMARG_TEXTS.slice(0, 4);
-}
-
 export function ReadingProvider({ children }: { children: ReactNode }) {
-  const [isLoadingList, setIsLoadingList] = useState<boolean>(false);
+  const [aartiIndex, setAartiIndex] = useState<ContentIndexItem[]>([]);
+  const [isLoadingIndex, setIsLoadingIndex] = useState<boolean>(true);
+  const [indexError, setIndexError] = useState<string | null>(null);
+  const [indexRetryCount, setIndexRetryCount] = useState(0);
+
   const [isLoadingContent, setIsLoadingContent] = useState<boolean>(false);
-  const [listError, setListError] = useState<string | null>(null);
   const [contentError, setContentError] = useState<string | null>(null);
-  const [recentReadings, setRecentReadings] = useState<PushtimargText[]>(getStoredRecent);
+
   const navigate = useNavigate();
 
-  const handleOpenText = useCallback((item: PushtimargText) => {
+  // ==========================================
+  // Fetch Aarti/Kirtan index on mount
+  // ==========================================
+  useEffect(() => {
+    let cancelled = false;
+    setIsLoadingIndex(true);
+    setIndexError(null);
+
+    getAartiIndex()
+      .then((data) => {
+        if (!cancelled) {
+          setAartiIndex(data);
+          setIsLoadingIndex(false);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setIndexError(extractContentError(err));
+          setIsLoadingIndex(false);
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [indexRetryCount]);
+
+  const retryIndex = useCallback(() => {
+    setIndexRetryCount((c) => c + 1);
+  }, []);
+
+  // ==========================================
+  // Open an aarti/kirtan item — fetch content then navigate
+  // ==========================================
+  const handleOpenAarti = useCallback((item: ContentIndexItem) => {
+    setIsLoadingContent(true);
     setContentError(null);
-    if (!item.content) setContentError("The divine text could not be loaded.");
-    setRecentReadings(prev => {
-      const updated = [item, ...prev.filter(t => t.id !== item.id)].slice(0, 4);
-      try { localStorage.setItem(RECENT_KEY, JSON.stringify(updated)); } catch { /* noop */ }
-      return updated;
-    });
-    navigate(ROUTES.READ, { state: { item } });
+
+    getAartiContent(item.file)
+      .then((detail) => {
+        setIsLoadingContent(false);
+        navigate(ROUTES.READ, { state: { item, detail } });
+      })
+      .catch((err) => {
+        setContentError(extractContentError(err));
+        setIsLoadingContent(false);
+        // Still navigate so user sees the error state on ReadScreen
+        navigate(ROUTES.READ, { state: { item } });
+      });
   }, [navigate]);
 
-  const handleRetryList = useCallback(() => {
-    setListError(null);
-    setIsLoadingList(true);
-    setTimeout(() => setIsLoadingList(false), 1000);
-  }, []);
-
-  const handleRetryContent = useCallback(() => {
-    setContentError(null);
-    setIsLoadingContent(true);
-    setTimeout(() => setIsLoadingContent(false), 1000);
-  }, []);
-
+  // ==========================================
+  // Context value
+  // ==========================================
   const value = useMemo<ReadingContextType>(() => ({
-    recentReadings, handleOpenText,
-    isLoadingList, listError, handleRetryList,
-    isLoadingContent, contentError, handleRetryContent,
-  }), [recentReadings, handleOpenText, isLoadingList, listError, handleRetryList, isLoadingContent, contentError, handleRetryContent]);
+    aartiIndex,
+    isLoadingIndex,
+    indexError,
+    retryIndex,
+    handleOpenAarti,
+    isLoadingContent,
+    contentError,
+  }), [aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti, isLoadingContent, contentError]);
 
   return (
     <ReadingContext.Provider value={value}>

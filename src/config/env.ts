@@ -18,4 +18,9 @@ function requireEnv(key: string): string {
 export const ENV = {
   /** Backend API base URL (e.g. http://localhost:3000/api/v1) */
   API_BASE_URL: requireEnv('VITE_API_BASE_URL'),
+
+  /** Static content API base URL (public, no auth required) */
+  CONTENT_API_BASE_URL:
+    import.meta.env.VITE_CONTENT_API_BASE_URL ||
+    'https://pushtimarg-web-api.netlify.app',
 } as const;

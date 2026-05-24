@@ -9,7 +9,7 @@ export const FavoritesContext = createContext<FavoritesContextType | undefined>(
 
 const FAVORITES_KEY = 'pushtimarg_favorites';
 
-function getStoredFavorites(): number[] {
+function getStoredFavorites(): string[] {
   try {
     const saved = localStorage.getItem(FAVORITES_KEY);
     if (saved) return JSON.parse(saved);
@@ -20,9 +20,9 @@ function getStoredFavorites(): number[] {
 }
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [favoriteIds, setFavoriteIds] = useState<number[]>(getStoredFavorites);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>(getStoredFavorites);
 
-  const toggleFavorite = useCallback((id: number) => {
+  const toggleFavorite = useCallback((id: string) => {
     setFavoriteIds(prev => {
       const newFavs = prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id];
       try { localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavs)); } catch { /* noop */ }

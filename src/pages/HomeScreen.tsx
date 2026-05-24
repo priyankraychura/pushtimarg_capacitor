@@ -16,8 +16,11 @@ import { ROUTES } from '../constants/routes';
 export const HomeScreen: React.FC = () => {
   const { isDarkMode, textColor, subTextColor } = useTheme();
   const { user, profileImage } = useAuth();
-  const { recentReadings, isLoadingList, listError, handleRetryList, handleOpenText } = useReading();
+  const { aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
   const navigate = useNavigate();
+
+  // Show the first 4 items as "recent" / featured
+  const featuredItems = aartiIndex.slice(0, 4);
 
   return (
     <>
@@ -67,10 +70,10 @@ export const HomeScreen: React.FC = () => {
         </section>
 
         <section>
-          <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Recent Readings</h2>
-          {isLoadingList ? <LoadingState message="Loading recent items..." /> : listError ? <ErrorState message={listError} onRetry={handleRetryList} /> : (
+          <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Featured</h2>
+          {isLoadingIndex ? <LoadingState message="Loading featured items..." /> : indexError ? <ErrorState message={indexError} onRetry={retryIndex} /> : (
             <div className="space-y-3">
-              {recentReadings.map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenText} />)}
+              {featuredItems.map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenAarti} />)}
             </div>
           )}
         </section>

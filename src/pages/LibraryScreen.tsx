@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Heart, Download } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useFavorites } from '../hooks/useFavorites';
@@ -8,14 +8,13 @@ import { SegmentedControl } from '../components/SegmentedControl';
 import { BhajanCard } from '../components/BhajanCard';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
-import { PUSHTIMARG_TEXTS } from '../constants/data';
 
 type LibraryTab = 'favorites' | 'downloads';
 
 export const LibraryScreen: React.FC = () => {
   const { textColor, subTextColor } = useTheme();
   const { favoriteIds } = useFavorites();
-  const { isLoadingList, listError, handleRetryList, handleOpenText } = useReading();
+  const { aartiIndex, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
   const [libraryTab, setLibraryTab] = useState<LibraryTab>('favorites');
   
   const [touchStart, setTouchStart] = useState<{x: number, y: number} | null>(null);
@@ -29,6 +28,11 @@ export const LibraryScreen: React.FC = () => {
     if (distanceX > 50 && libraryTab === 'favorites') setLibraryTab('downloads');
     if (distanceX < -50 && libraryTab === 'downloads') setLibraryTab('favorites');
   };
+
+  const favoriteItems = useMemo(
+    () => aartiIndex.filter((t) => favoriteIds.includes(t.id)),
+    [aartiIndex, favoriteIds]
+  );
 
   return (
     <>
@@ -47,11 +51,11 @@ export const LibraryScreen: React.FC = () => {
         className="flex-1 overflow-y-auto px-6 pb-36 hide-scrollbar z-20 relative" 
         style={{ maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 120px), transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 120px), transparent 100%)' }}
       >
-        {isLoadingList ? <LoadingState message="Loading your library..." /> : listError ? <ErrorState message={listError} onRetry={handleRetryList} /> : (
+        {isLoadingIndex ? <LoadingState message="Loading your library..." /> : indexError ? <ErrorState message={indexError} onRetry={retryIndex} /> : (
           <div className="space-y-3">
             {libraryTab === 'favorites' ? (
-              favoriteIds.length > 0 ? (
-                PUSHTIMARG_TEXTS.filter(t => favoriteIds.includes(t.id)).map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenText} />)
+              favoriteItems.length > 0 ? (
+                favoriteItems.map((item) => <BhajanCard key={item.id} item={item} onClick={handleOpenAarti} />)
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-center mt-10">
                   <Heart size={40} className={`mb-4 ${subTextColor} opacity-50`} />

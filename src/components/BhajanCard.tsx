@@ -15,7 +15,7 @@ export const BhajanCard: React.FC<BhajanCardProps> = ({ item, onClick }) => {
       </div>
       <div className="flex-1 overflow-hidden">
         <h4 className={`font-semibold text-sm ${textColor}`}>{item.title}</h4>
-        <p className={`text-xs mt-0.5 ${subTextColor}`}>{item.author} {item.category && `• ${item.category}`}</p>
+        <p className={`text-xs mt-0.5 ${subTextColor}`}>{item.artist} {item.category && `• ${item.category}`}</p>
       </div>
       <IconButton icon={<ChevronRight size={20} />} className="!bg-transparent" />
     </GlassCard>

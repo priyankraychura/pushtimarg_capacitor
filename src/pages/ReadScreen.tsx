@@ -3,27 +3,32 @@ import { MoreVertical, Type, Heart, Download, Minus, Plus } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { useFavorites } from '../hooks/useFavorites';
-import { useReading } from '../hooks/useReading';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { IconButton } from '../components/IconButton';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { ROUTES } from '../constants/routes';
-import type { PushtimargText } from '../types';
+import type { ContentIndexItem, AartiContent, VartaContent } from '../types';
+import { isAartiContent } from '../types';
 
 interface ReadLocationState {
-  item?: PushtimargText;
+  item?: ContentIndexItem;
+  detail?: AartiContent | VartaContent;
+  contentError?: string;
 }
 
 export const ReadScreen: React.FC = () => {
   const { isDarkMode, fontSize, setFontSize, textColor, subTextColor, borderGlass, bgGlassHover } = useTheme();
   const { favoriteIds, toggleFavorite } = useFavorites();
-  const { isLoadingContent, contentError, handleRetryContent } = useReading();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const item = (location.state as ReadLocationState | null)?.item;
+
+  const state = (location.state as ReadLocationState | null);
+  const item = state?.item;
+  const detail = state?.detail;
+  const errorMsg = state?.contentError ?? null;
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => { if (menuRef.current && !menuRef.current.contains(e.target as Node)) setIsMenuOpen(false); };
@@ -33,10 +38,44 @@ export const ReadScreen: React.FC = () => {
 
   if (!item) return null;
 
+  const isFavorite = favoriteIds.includes(item.id);
+
+  // Render content based on type
+  const renderContent = () => {
+    if (errorMsg) return <ErrorState message={errorMsg} />;
+    if (!detail) return <LoadingState message="Loading divine text..." />;
+
+    if (isAartiContent(detail)) {
+      // Aarti: content is string[] — render each line
+      return (
+        <div
+          className={`font-medium leading-[2.2] text-center transition-all duration-300 ${textColor}`}
+          style={{ fontSize: fontSize + 'px' }}
+        >
+          {detail.content.map((line, idx) => (
+            <p key={idx} className={line.trim() === '' ? 'h-4' : ''}>
+              {line}
+            </p>
+          ))}
+        </div>
+      );
+    }
+
+    // Varta: content is a single string
+    return (
+      <div
+        className={`font-medium leading-[2.2] text-center whitespace-pre-wrap transition-all duration-300 ${textColor}`}
+        style={{ fontSize: fontSize + 'px' }}
+      >
+        {detail.content}
+      </div>
+    );
+  };
+
   return (
     <>
       <ScreenHeader 
-        showBack onBack={() => navigate(ROUTES.HOME)}
+        showBack onBack={() => navigate(-1)}
         title={
           <div className="flex flex-col justify-center">
             <span className={`text-[10px] font-bold uppercase tracking-widest mb-0.5 ${isDarkMode ? 'text-amber-500' : 'text-orange-600'}`}>{item.category}</span>
@@ -57,8 +96,8 @@ export const ReadScreen: React.FC = () => {
                   </div>
                 </div>
                 <button onClick={() => { toggleFavorite(item.id); setIsMenuOpen(false); }} className={`flex items-center gap-3 px-3 py-3 w-full text-left transition-colors rounded-lg border-b ${borderGlass} ${bgGlassHover}`}>
-                  <Heart size={16} className={favoriteIds.includes(item.id) ? 'text-red-500' : subTextColor} fill={favoriteIds.includes(item.id) ? "currentColor" : "none"} />
-                  <span className={`text-sm font-semibold ${textColor}`}>{favoriteIds.includes(item.id) ? 'Remove from Favorites' : 'Add to Favorites'}</span>
+                  <Heart size={16} className={isFavorite ? 'text-red-500' : subTextColor} fill={isFavorite ? "currentColor" : "none"} />
+                  <span className={`text-sm font-semibold ${textColor}`}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</span>
                 </button>
                 <button onClick={() => setIsMenuOpen(false)} className={`flex items-center gap-3 px-3 py-3 w-full text-left transition-colors rounded-lg ${bgGlassHover}`}>
                   <Download size={16} className={subTextColor} /><span className={`text-sm font-semibold ${textColor}`}>Download Offline</span>
@@ -69,14 +108,12 @@ export const ReadScreen: React.FC = () => {
         }
       />
       <main className="flex-1 overflow-y-auto px-6 pt-8 pb-12 hide-scrollbar relative">
-        {isLoadingContent ? <LoadingState message="Loading divine text..." /> : contentError ? <ErrorState message={contentError} onRetry={handleRetryContent} /> : (
-          <>
-            <div className={`font-medium leading-[2.2] text-center whitespace-pre-wrap transition-all duration-300 ${textColor}`} style={{ fontSize: fontSize + 'px' }}>{item.content}</div>
-            <div className="flex flex-col items-center mt-16 mb-8">
-              <div className={`h-px w-16 mb-6 rounded-full ${isDarkMode ? 'bg-amber-500/40' : 'bg-orange-300'}`}></div>
-              <p className={`text-lg font-bold tracking-wide ${textColor}`}>Jai Shree Krishna</p>
-            </div>
-          </>
+        {renderContent()}
+        {detail && (
+          <div className="flex flex-col items-center mt-16 mb-8">
+            <div className={`h-px w-16 mb-6 rounded-full ${isDarkMode ? 'bg-amber-500/40' : 'bg-orange-300'}`}></div>
+            <p className={`text-lg font-bold tracking-wide ${textColor}`}>Jai Shree Krishna</p>
+          </div>
         )}
       </main>
     </>
