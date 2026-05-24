@@ -26,7 +26,7 @@ export const HomeScreen: React.FC = () => {
         subtitle="Discover Pushtimarg Nitya Niyam"
         rightElement={
           <IconButton 
-            icon={profileImage ? <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" /> : <User size={20} />} 
+            icon={profileImage ? <img src={profileImage} alt="Profile" className="w-full h-full rounded-2xl object-cover" /> : <User size={20} />} 
             onClick={() => navigate(user ? ROUTES.PROFILE : ROUTES.LOGIN)} 
             className={profileImage ? "!p-0 overflow-hidden" : ""}
           />
@@ -46,7 +46,7 @@ export const HomeScreen: React.FC = () => {
               <h3 className={`text-lg font-bold mt-1 ${textColor}`}>Vaishakh Sud 11 (Ekadashi)</h3>
               <p className={`text-xs mt-1 ${subTextColor}`}>Vikram Samvat 2082</p>
             </div>
-            <div className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-full border backdrop-blur-md shadow-sm ${isDarkMode ? 'bg-white/10 border-white/20 text-amber-300' : 'bg-white/60 border-white/60 text-orange-500'}`}>
+            <div className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-2xl border backdrop-blur-md shadow-sm ${isDarkMode ? 'bg-white/10 border-white/20 text-amber-300' : 'bg-white/60 border-white/60 text-orange-500'}`}>
               <Calendar size={24} />
             </div>
           </GlassCard>

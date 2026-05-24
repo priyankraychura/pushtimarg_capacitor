@@ -8,7 +8,7 @@ export const IconButton: React.FC<IconButtonProps> = ({ icon, onClick, className
   const activeStyle = isActive ? primaryText : '';
   
   return (
-    <button onClick={onClick} className={`p-2.5 rounded-full shrink-0 transition-all backdrop-blur-md shadow-sm flex items-center justify-center ${defaultStyle} ${activeStyle} ${className}`}>
+    <button onClick={onClick} className={`p-2.5 rounded-2xl shrink-0 transition-all backdrop-blur-md shadow-sm flex items-center justify-center ${defaultStyle} ${activeStyle} ${className}`}>
       {icon}
     </button>
   );
