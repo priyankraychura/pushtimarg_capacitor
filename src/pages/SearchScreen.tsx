@@ -29,7 +29,7 @@ export const SearchScreen: React.FC = () => {
       for (const v of vaishnavs) {
         for (const p of v.prasangs) {
           items.push({
-            id: p.id,
+            id: `${v.id}_${p.id}`,
             title: `${v.name} — ${p.title}`,
             artist: v.name,
             category: 'Varta',
@@ -46,7 +46,7 @@ export const SearchScreen: React.FC = () => {
   }, [aartiIndex, varta84, varta252]);
 
   const displayTexts = useMemo(() => {
-    if (!searchQuery) {
+    if (!searchQuery.trim()) {
       // Show featured aartis when not searching
       return aartiIndex.slice(0, 6);
     }
@@ -67,14 +67,14 @@ export const SearchScreen: React.FC = () => {
             icon={<Search size={20} />} 
             placeholder="Search aartis, kirtans, varta..." 
             value={searchQuery} 
-            onChange={(e) => setSearchQuery(e.target.value)} 
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         }
         className="!border-none !bg-transparent !shadow-none !pt-8" 
       />
 
       <main className="flex-1 overflow-y-auto px-6 pb-36 hide-scrollbar z-20 relative" style={{ maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 120px), transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 120px), transparent 100%)' }}>
-        <h2 className={`text-lg font-semibold mb-4 mt-2 ${textColor}`}>{searchQuery ? 'Results' : 'Featured'}</h2>
+        <h2 className={`text-lg font-semibold mb-4 mt-2 ${textColor}`}>{searchQuery.trim() ? 'Results' : 'Featured'}</h2>
         
         {isLoadingIndex ? <LoadingState message="Loading content..." /> : indexError ? <ErrorState message={indexError} onRetry={retryIndex} /> : (
           <div className="space-y-3">
