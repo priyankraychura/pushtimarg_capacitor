@@ -127,7 +127,7 @@ export const ProfileScreen: React.FC = () => {
             >
               Cancel
             </button>
-            <PrimaryButton className="flex-1 !mt-0 flex items-center justify-center" onClick={handleSave}>
+            <PrimaryButton className="flex-1 !mt-0" onClick={handleSave}>
               {isSaving ? <Loader2 size={20} className="animate-spin" /> : 'Save'}
             </PrimaryButton>
           </div>
