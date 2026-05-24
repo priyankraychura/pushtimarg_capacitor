@@ -9,7 +9,7 @@ import { ToggleSwitch } from '../components/ToggleSwitch';
 
 export const SettingsScreen: React.FC = () => {
   const { isDarkMode, setIsDarkMode, fontSize, setFontSize, textColor, subTextColor } = useTheme();
-  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(true);
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(false);
   const [floatingPlayerEnabled, setFloatingPlayerEnabled] = useState<boolean>(false);
 
   const handleShareApp = () => {
