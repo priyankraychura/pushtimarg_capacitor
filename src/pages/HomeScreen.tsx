@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
 import { useReading } from '../hooks/useReading';
+import { usePanchang } from '../hooks/usePanchang';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { IconButton } from '../components/IconButton';
 import { GlassCard } from '../components/GlassCard';
@@ -18,6 +19,7 @@ export const HomeScreen: React.FC = () => {
   const { user, profileImage } = useAuth();
   const { aartiIndex, recentReadings, isLoadingIndex, indexError, retryIndex, handleOpenAarti } = useReading();
   const navigate = useNavigate();
+  const panchang = usePanchang();
 
   // Show the last 4 reading items, or fallback to featured if empty
   const displayItems = recentReadings.length > 0 ? recentReadings : aartiIndex.slice(0, 4);
@@ -47,8 +49,22 @@ export const HomeScreen: React.FC = () => {
             <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-30 pointer-events-none ${isDarkMode ? 'bg-amber-500' : 'bg-orange-400'}`}></div>
             <div className="relative z-10">
               <span className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-amber-500' : 'text-orange-600'}`}>Today's Tithi</span>
-              <h3 className={`text-lg font-bold mt-1 ${textColor}`}>Vaishakh Sud 11 (Ekadashi)</h3>
-              <p className={`text-xs mt-1 ${subTextColor}`}>Vikram Samvat 2082</p>
+              {panchang ? (
+                <>
+                  <h3 className={`text-lg font-bold mt-1 ${textColor}`}>{panchang.fullTithi}</h3>
+                  <p className={`text-xs mt-1 ${subTextColor}`}>Vikram Samvat {panchang.vikramSamvat}</p>
+                  {panchang.festival && (
+                    <span className={`inline-block text-[10px] font-bold mt-1.5 px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-amber-500/20 text-amber-400' : 'bg-orange-100 text-orange-600'}`}>
+                      ✨ {panchang.festival}
+                    </span>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className={`h-5 w-48 rounded-md mt-1.5 animate-pulse ${isDarkMode ? 'bg-white/10' : 'bg-black/10'}`} />
+                  <div className={`h-3 w-32 rounded-md mt-2 animate-pulse ${isDarkMode ? 'bg-white/10' : 'bg-black/10'}`} />
+                </>
+              )}
             </div>
             <div className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-2xl border backdrop-blur-md shadow-sm ${isDarkMode ? 'bg-white/10 border-white/20 text-amber-300' : 'bg-white/60 border-white/60 text-orange-500'}`}>
               <Calendar size={24} />
