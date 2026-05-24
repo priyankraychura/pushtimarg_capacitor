@@ -66,38 +66,31 @@ export const CalendarScreen: React.FC = () => {
       
       <main className="flex-1 overflow-y-auto px-6 pt-4 pb-32 hide-scrollbar z-20 relative">
         {/* Selected Day Info Card */}
-        <GlassCard className="p-6 mb-8 relative overflow-hidden flex flex-col shadow-lg border-t-white/40">
-            <div className={`absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[40px] opacity-30 pointer-events-none ${isDarkMode ? 'bg-amber-500' : 'bg-orange-500'}`}></div>
-            <div className={`absolute -bottom-20 -left-20 w-48 h-48 rounded-full blur-[40px] opacity-20 pointer-events-none ${isDarkMode ? 'bg-rose-500' : 'bg-rose-400'}`}></div>
-
-            <div className="relative z-10 flex flex-col">
-                <div className="flex justify-between items-start mb-4">
-                    <span className={`text-[11px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full ${isDarkMode ? 'bg-amber-500/20 text-amber-400' : 'bg-orange-100 text-orange-600'}`}>
-                        {activeDay?.isToday ? "Today" : "Selected Date"}
-                    </span>
-                    <span className={`text-sm font-bold ${subTextColor}`}>
-                      {activeDay ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.vikramSamvat}` : ''}
-                    </span>
-                </div>
-
-                <h2 className={`text-4xl font-black tracking-tight ${textColor}`}>
-                  {activeDay ? `${ENGLISH_MONTHS[activeDay.date.getMonth()]} ${activeDay.date.getDate()}` : ''}
-                </h2>
-                
-                <div className="mt-2 flex items-center gap-2">
-                  <p className={`text-lg font-bold ${primaryText}`}>
-                    {activeDay ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.paksha} ${activeDay.tithi.tithiName}` : 'Select a date'}
-                  </p>
-                </div>
-
-                {activeDay && (activeDay.tithi.isAgiyaras || activeDay.tithi.isPoonam || activeDay.tithi.isAmas) && (
-                    <div className="mt-4 inline-flex">
-                      <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm ${primaryGradient} text-white`}>
-                          ✨ {activeDay.tithi.isAgiyaras ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.paksha} Ekadashi` : activeDay.tithi.isPoonam ? `${activeDay.tithi.gujMonth} Poonam` : `${activeDay.tithi.gujMonth} Amas`}
-                      </span>
-                    </div>
-                )}
+        <GlassCard className="p-4 mb-6">
+            <div className="flex items-center justify-between mb-2">
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${isDarkMode ? 'bg-amber-500/15 text-amber-400' : 'bg-orange-100/80 text-orange-600'}`}>
+                    {activeDay?.isToday ? "Today" : "Selected Date"}
+                </span>
+                <span className={`text-xs font-semibold ${subTextColor}`}>
+                  {activeDay ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.vikramSamvat}` : ''}
+                </span>
             </div>
+
+            <h2 className={`text-2xl font-extrabold ${textColor}`}>
+              {activeDay ? `${ENGLISH_MONTHS[activeDay.date.getMonth()]} ${activeDay.date.getDate()}` : ''}
+            </h2>
+            
+            <p className={`text-sm font-semibold mt-1 ${primaryText}`}>
+              {activeDay ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.paksha} ${activeDay.tithi.tithiName}` : 'Select a date'}
+            </p>
+
+            {activeDay && (activeDay.tithi.isAgiyaras || activeDay.tithi.isPoonam || activeDay.tithi.isAmas) && (
+                <div className="mt-3 inline-flex">
+                  <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg ${primaryGradient} text-white`}>
+                      ✨ {activeDay.tithi.isAgiyaras ? `${activeDay.tithi.gujMonth} ${activeDay.tithi.paksha} Ekadashi` : activeDay.tithi.isPoonam ? `${activeDay.tithi.gujMonth} Poonam` : `${activeDay.tithi.gujMonth} Amas`}
+                  </span>
+                </div>
+            )}
         </GlassCard>
 
         {/* Calendar Grid */}
