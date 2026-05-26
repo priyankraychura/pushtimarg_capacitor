@@ -180,7 +180,7 @@ const VaishnavCard: React.FC<VaishnavCardProps> = ({ vaishnav }) => {
   return (
     <GlassCard className="p-4 rounded-2xl">
       <div className="flex items-center gap-3 mb-3">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white/60 border-black/5'}`}>
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm border ${isDarkMode ? 'bg-slate-800/60 border-slate-700/40' : 'bg-white/60 border-black/5'}`}>
           <span className={`text-lg font-bold ${isDarkMode ? 'text-indigo-400' : 'text-indigo-600'}`}>{vaishnav.index}</span>
         </div>
         <div className="flex-1">
@@ -196,7 +196,7 @@ const VaishnavCard: React.FC<VaishnavCardProps> = ({ vaishnav }) => {
             disabled={loadingPrasang === p.id}
             className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 border
               ${isDarkMode 
-                ? 'bg-white/5 border-white/10 hover:bg-white/10 text-white/80' 
+                ? 'bg-slate-800/40 border-slate-700/30 hover:bg-slate-700/40 text-slate-200' 
                 : 'bg-white/40 border-black/5 hover:bg-white/70 text-gray-700'}
               ${loadingPrasang === p.id ? 'opacity-60' : 'cursor-pointer hover:scale-[1.01]'}
             `}

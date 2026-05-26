@@ -10,7 +10,7 @@ export const BhajanCard: React.FC<BhajanCardProps> = ({ item, onClick }) => {
   const { isDarkMode, textColor, subTextColor } = useTheme();
   return (
     <GlassCard onClick={() => onClick(item)} className="p-4 rounded-2xl flex items-center gap-4 cursor-pointer hover:scale-[1.02] transition-transform duration-300">
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0 border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white/60 border-black/5'}`}>
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0 border ${isDarkMode ? 'bg-slate-800/60 border-slate-700/40' : 'bg-white/60 border-black/5'}`}>
         {CATEGORIES.find(c => c.name === item.category)?.icon || <BookOpen size={24} className={subTextColor} />}
       </div>
       <div className="flex-1 overflow-hidden">

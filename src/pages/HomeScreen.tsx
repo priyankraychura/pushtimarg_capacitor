@@ -46,15 +46,15 @@ export const HomeScreen: React.FC = () => {
             onClick={() => navigate(ROUTES.CALENDAR)} 
             className="p-5 rounded-[24px] relative overflow-hidden flex items-center justify-between shadow-sm cursor-pointer hover:scale-[1.02] transition-transform duration-300"
           >
-            <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-30 pointer-events-none ${isDarkMode ? 'bg-amber-500' : 'bg-orange-400'}`}></div>
+            <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-30 pointer-events-none ${isDarkMode ? 'bg-blue-500' : 'bg-orange-400'}`}></div>
             <div className="relative z-10">
-              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-amber-500' : 'text-orange-600'}`}>Today's Tithi</span>
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-blue-400' : 'text-orange-600'}`}>Today's Tithi</span>
               {panchang ? (
                 <>
                   <h3 className={`text-lg font-bold mt-1 ${textColor}`}>{panchang.fullTithi}</h3>
                   <p className={`text-xs mt-1 ${subTextColor}`}>Vikram Samvat {panchang.vikramSamvat}</p>
                   {panchang.festival && (
-                    <span className={`inline-block text-[10px] font-bold mt-1.5 px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-amber-500/20 text-amber-400' : 'bg-orange-100 text-orange-600'}`}>
+                    <span className={`inline-block text-[10px] font-bold mt-1.5 px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-blue-500/15 text-blue-400' : 'bg-orange-100 text-orange-600'}`}>
                       ✨ {panchang.festival}
                     </span>
                   )}
@@ -66,7 +66,7 @@ export const HomeScreen: React.FC = () => {
                 </>
               )}
             </div>
-            <div className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-2xl border backdrop-blur-md shadow-sm ${isDarkMode ? 'bg-white/10 border-white/20 text-amber-300' : 'bg-white/60 border-white/60 text-orange-500'}`}>
+            <div className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-2xl border backdrop-blur-md shadow-sm ${isDarkMode ? 'bg-slate-800/60 border-slate-600/30 text-blue-400' : 'bg-white/60 border-white/60 text-orange-500'}`}>
               <Calendar size={24} />
             </div>
           </GlassCard>
